@@ -104,14 +104,3 @@ export const getimages = async (req, res) => {
         return res.send(error);
     }
 }
-
-
-// export const getimages = async (req,res) =>{
-//     try{
-//         let key = "k_333lvlms";
-//         const response = await axios.get(`https://imdb-api.com/en/API/Top250Movies/${key}`);
-//         return res.send(response.data);
-//     }catch(err){
-//         return res.send(err);
-//     }
-// }
