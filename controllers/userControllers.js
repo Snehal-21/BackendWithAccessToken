@@ -51,14 +51,18 @@ export const regeneratkey = async (req, res) => {
         if (decipherpass == password) {
             const id = idGenerator("example", 4);
 
-            const key = await User.findOneAndUpdate({ email }, { accesstoken: id });
-            await key.save();
+            if (user[0].accesstoken) {
+                return res.send("token already generated.")
+            } else {
+                await User.findOneAndUpdate({ email }, { accesstoken: id });
 
-            setTimeout(async () => {
-                await User.updateOne({ email }, { $unset: { accesstoken: 1 } });
-            }, 60 * 1000);
+                setTimeout(async () => {
+                    await User.updateOne({ email }, { $unset: { accesstoken: 1 } });
+                }, 60 * 1000);
+                return res.send("Key generated")
+            }
 
-            return res.send("Key generated")
+            
         } else {
             return res.send("password not matched")
         }
@@ -70,32 +74,33 @@ export const regeneratkey = async (req, res) => {
 }
 
 
-export const getimages=async(req,res)=>{
-    try{
-        const{email,password}=req.body;
-        if(!email) return res.send("Email is required");
-        if(!password) return res.send("Password is required");
+export const getimages = async (req, res) => {
+    try {
+        const { email, password, Movie } = req.body;
+        if (!email) return res.send("Email is required");
+        if (!password) return res.send("Password is required");
 
-        const user=await User.find({email}).exec();
-        if(!user.length) return res.send("User not found");
+        const user = await User.find({ email }).exec();
+        if (!user.length) return res.send("User not found");
 
-        var secretpass="pass";
-        var decipherpass=encrypt.decrypt(user[0].password,secretpass,256);
+        var secretpass = "pass";
+        var decipherpass = encrypt.decrypt(user[0].password, secretpass, 256);
 
-        if(decipherpass==password){
-            if(user[0].accesstoken!=undefined){
+        if (decipherpass == password) {
+            if (user[0].accesstoken != undefined) {
                 // return res.send("user is allowed to access videos")
-                const key="k_333lvlms"
-                const response = await axios.get(`https://imdb-api.com/en/API/Top250Movies/${key}`);
-                return res.send(response.data);
-            }else{
+                const key = "k_333lvlms"
+                const response = await axios.get(`https://imdb-api.com/en/API/Posters/${key}/${Movie}`);
+                console.log(response.data,"response")
+                return res.send(response.data.title);
+            } else {
                 return res.send("regenerate token");
             }
-            
-        }else{
+
+        } else {
             return res.send("Incorrect password.")
         }
-    }catch(error){
+    } catch (error) {
         return res.send(error);
     }
 }
