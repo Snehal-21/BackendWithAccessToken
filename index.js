@@ -13,4 +13,4 @@ mongoose.connect('mongodb+srv://Snehal:Snehal1234@mern-todo.va7rcii.mongodb.net/
 .then(()=>console.log("DB coneected"))
 .catch((err)=>console.log(err,"db error"));
 
-app.listen(6000,()=>console.log("working on PORT 8000"));
+app.listen(6000,()=>console.log("working on PORT 6000"));

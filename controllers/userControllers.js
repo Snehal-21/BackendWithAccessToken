@@ -104,3 +104,13 @@ export const getimages = async (req, res) => {
         return res.send(error);
     }
 }
+
+export const getMovies = async (req,res) =>{
+    try{
+        let apiKey = "c45a857c193f6302f2b5061c3b85e743";
+        const response = await axios.post(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1`);
+        return res.send(response.data);
+    }catch(err){
+        return res.send(err);
+    }
+}
