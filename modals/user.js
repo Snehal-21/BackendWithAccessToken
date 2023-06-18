@@ -6,6 +6,11 @@ const user=new Schema({
     email:String,
     password:String,
     accesstoken:String
+    // accesstoken: {
+    //     type : String,
+    //     unique : true,
+    //     required : true
+    // }
 });
 
 export default mongoose.model("User",user) 

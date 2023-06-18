@@ -114,3 +114,14 @@ export const getMovies = async (req,res) =>{
         return res.send(err);
     }
 }
+
+
+
+// let random = "";
+// let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+// let charLength = characters.length;
+//let length = 100;
+
+// for(let i=0;i<length;i++){
+    // random += characters.charAt(Math.floor(Math.random() * charLength));
+// }
