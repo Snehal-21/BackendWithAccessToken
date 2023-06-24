@@ -17,6 +17,7 @@ export const register = async (req, res) => {
 
         var encryptpass = encrypt.encrypt(password, secretpass, 256);
         console.log(encryptpass);
+        
         const id = idGenerator("example", 4);
         const data = new User({
             name,
